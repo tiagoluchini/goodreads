@@ -6,9 +6,9 @@ module Goodreads
 
     # Initialize a new Goodreads book object with its ISBN (as a String)
     #
-    #   movie = Imdb::Movie.new("0095016")
+    #   book = Goodreads::Book.new("9780375403170")
     #
-    # Imdb::Movie objects are lazy loading, meaning that no HTTP request
+    # Goodreads::Book objects are lazy loading, meaning that no HTTP request
     # will be performed when a new object is created. Only when you use an
     # accessor that needs the remote data, a HTTP request is made (once).
     #
@@ -17,6 +17,7 @@ module Goodreads
       @query_url = Goodreads::Book.make_query_url(isbn)
     end
 
+    # Returns the id used by Goodreads (does not trigger lazy loading)
     def goodreads_id
       @url.match(/\/(\d+)\./)[1] rescue nil
     end
@@ -26,30 +27,37 @@ module Goodreads
       document.search(".bookTitle").innerHTML.strip rescue nil
     end
     
+    # Returns a string containing the URL for the cover file
     def cover
       document.at("img[@id='coverImage']")['src'] rescue nil
     end
     
+    # Returns an array with the authors of the book
     def authors
       document.search("[@id='bookAuthors']/[@itemprop='author']/a/span").map { |elem| elem.innerHTML.strip } rescue []
     end
     
+    # Returns a string with the current Goodreads rating
     def rating
       document.at("[@id='bookMeta']/*/[@itemprop='ratingValue']").innerHTML.strip rescue nil
     end
     
+    # Retursn a string with the book's description
     def description
       document.at("[@id='description']/span[1]").innerHTML.goodreads_strip_tags.goodreads_strip_bad_description_content rescue nil
     end
 
+    # Returns an array with the main characters of the book
     def characters
       document.search("[@id='bookDataBox']/*/[@class='infoBoxRowItem']/a").select {|elem| elem['href'] =~ /character/}.map {|elem| elem.innerHTML.strip} rescue []
     end
     
+    # Returns an integer with the number of pages
     def number_of_pages
       document.at("[@itemprop='numberOfPages']").innerHTML.scan(/\d+/).first.to_i rescue nil
     end
     
+    # Returns an array with the genres of the book
     def genres
       document.search("[@class='actionLinkLite']").select { |elem| elem['href'] =~ /genres/ }.map { |elem| elem.innerHTML.strip } rescue []
     end
