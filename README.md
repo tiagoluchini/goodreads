@@ -16,18 +16,28 @@ This gem allows you to easily access publicly available data from Goodreads.
 
 ## In a nutshell
 
+    require 'goodreads'
     b = Goodreads::Book.new('9780375403170')
     
     b.title
     #=> "Les Misérables"
+    
     b.characters
     #=> ["Jean Valjean", "Javert", "Cosette", "Fantine", "Bishop Myriel"]
+    
     b.cover
     #=> "http://d.gr-assets.com/books/1320406739l/24284.jpg" 
 
 ## Installation
 
-    $ gem install goodreads
+Via Rubygems, simply:
+
+    $ gem install goodreads-wrapper
+
+Or on your `Gemfile`:
+
+    gem 'goodreads-wrapper', :require => 'goodreads'
+
 
 ## Future features
 

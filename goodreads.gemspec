@@ -3,7 +3,7 @@ $:.push File.expand_path("../lib", __FILE__)
 require "goodreads/version"
 
 Gem::Specification.new do |s|
-  s.name        = "goodreads"
+  s.name        = "goodreads-wrapper"
   s.version     = Goodreads::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Tiago Luchini"]
@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.summary     = %q{Easily access the publicly available information on Goodreads.}
   s.description = %q{Easily use Ruby to find information on Goodreads.com.}
 
-  s.rubyforge_project = "goodreads"
+  s.rubyforge_project = "goodreads-wrapper"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
